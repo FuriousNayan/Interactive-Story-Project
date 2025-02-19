@@ -15,3 +15,5 @@ document.getElementById('continue-button').addEventListener('click', function() 
   // Hide the second paragraph
   document.querySelectorAll('p')[1].style.display = 'none';
 });
+
+//s
