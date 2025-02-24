@@ -7,34 +7,205 @@ document.addEventListener('click', function playOnClick() {
   document.removeEventListener('click', playOnClick);
 });
 
-document.getElementById('continue-button').addEventListener('click', function() {
-  replaceButtonWithTwo(
-    "Explore Ruins", "Head Straight to Cathedral",
-    { text: "Elias dies from the Hollowborn for being too curious", image: "/Images/eliasDieHollowborn.webp" },
-    { text: "The cursed Father Malgath lingers within, speaking in riddles. He tells Elias the Heart of the Hollow Veil lies beyond Ebonwood Forest, but warns that it is not a gift, it is a choice", image: "/Images/eliasRiddle.webp" }
-  );
+let scenes = [];
+let currentSceneId = null;
+let gameStarted = false;
 
-  updateStory(
-    "Returning to Varesth\nElias arrives at the ruined capital, now infested with Hollowborn, twisted remnants of humanity. A dark presence watches him from the shadows.",
-    "/Images/secondScene.webp"
-  );
-});
+initializeScenes();
+
+
+
+function createScene(id, text, image, choices) {
+  const existingSceneIndex = scenes.findIndex(scene => scene[0] === id);
+  
+  const newScene = [id, text, image, choices];
+  
+  if (existingSceneIndex >= 0) {
+      scenes[existingSceneIndex] = newScene;
+  } else {
+      scenes.push(newScene);
+  }
+}
+
+function findScene(id) {
+  const scene = scenes.find(scene => scene[0] === id);
+  return scene || null;
+}
+
+function goToScene(id) {
+  const scene = findScene(id);
+  if (!scene) {
+      console.error(`Scene ${id} does not exist!`);
+      return;
+  }
+  
+  currentSceneId = id;
+  gameStarted = true;
+  
+  updateStory(scene[1], scene[2]);
+  
+  createChoiceButtons(scene[3]);
+  
+  const continueButton = document.getElementById('continue-button');
+  if (continueButton) {
+      continueButton.remove();
+  }
+}
 
 function updateStory(text, imageSrc) {
   document.getElementById('story-text').textContent = text;
   document.getElementById('story-image').src = imageSrc;
 }
 
-function replaceButtonWithTwo(button1Text, button2Text, scene1, scene2) {
-  const originalButton = document.getElementById('continue-button');
+function createChoiceButtons(choices) {
+  const buttonContainer = document.getElementById('button-container') || document.createElement('div');
+  buttonContainer.id = 'button-container';
+  
+  buttonContainer.innerHTML = '';
+  
+  if (!choices || choices.length === 0) {
+      const restartButton = document.createElement('button');
+      restartButton.textContent = 'Restart Story';
+      restartButton.addEventListener('click', () => goToScene('intro'));
+      buttonContainer.appendChild(restartButton);
+  } else {
+      choices.forEach(choice => {
+          const button = document.createElement('button');
+          button.textContent = choice[0];
+          button.addEventListener('click', () => goToScene(choice[1]));
+          buttonContainer.appendChild(button);
+      });
+  }
+  
+  const existingContainer = document.getElementById('button-container');
+  if (existingContainer) {
+      existingContainer.replaceWith(buttonContainer);
+  } else {
+      const storyContainer = document.querySelector('.story-container') || document.body;
+      storyContainer.appendChild(buttonContainer);
+  }
+}
 
-  // Create and configure new buttons
-  const createButton = (text, scene) => {
-    const btn = document.createElement('button');
-    btn.textContent = text;
-    btn.addEventListener('click', () => updateStory(scene.text, scene.image));
-    return btn;
-  };
+document.getElementById('continue-button').addEventListener('click', function() {
+  goToScene('intro');
+});
 
-  originalButton.replaceWith(createButton(button1Text, scene1), createButton(button2Text, scene2));
+function addNewScene(id, text, image, choices) {
+  createScene(id, text, image, choices);
+}
+
+function initializeScenes() {
+  createScene(
+      'intro',
+      "Returning to Varesth\nElias arrives at the ruined capital, now infested with Hollowborn, twisted remnants of humanity. A dark presence watches him from the shadows.",
+      "/Images/secondScene.webp",
+      [
+          ["Explore Ruins", "ruinsExplore"],
+          ["Head Straight to Cathedral", "cathedral"]
+      ]
+  );
+
+  createScene(
+      'ruinsExplore',
+      "Elias dies from the Hollowborn for being too curious",
+      "/Images/eliasDieHollowborn.webp",
+      []
+  );
+
+  createScene(
+      'cathedral',
+      "The cursed Father Malgath lingers within, speaking in riddles. He tells Elias the Heart of the Hollow Veil lies beyond Ebonwood Forest, but warns that it is not a gift, it is a choice",
+      "/Images/eliasRiddle.webp",
+      [
+          ["Demand the truth from Father Malgath", "demandTruth"],
+          ["Ponder upon his words and leave", "ponderWords"],
+      ]
+  );
+
+  createScene(
+    'demandTruth',
+    "Father Malgath rips out your lungs, because you talked too much",
+    "/Images/eliasMalgath.webp",
+    []
+  );
+
+  createScene(
+    'ponderWords',
+    "A ruined village stands on the path ahead, its dead still whispering for release",
+    "/Images/eliasVillage.webp",
+    [
+        ["Perform the burial Ritual to grant them peace, but risk drawing their attention", "burialRitual"],
+        ["Leave them be and continue on your journey", "leaveVillage"],
+    ]
+  );
+
+  createScene(
+    'burialRitual',
+    "The dead are thankful, and grant you with the power of death",
+    "/Images/eliasDeathPower.webp",
+    [
+        ["Continue on your journey", "leaveVillage"],
+    ]
+  );
+
+  createScene(
+    'leaveVillage',
+    "The Cursed woods twist reality. As Elias ventures deeper he encounters the Wraith of the Forgotten, a being that speaks of his past",
+    "/Images/eliasPast.webp",
+    [
+        ["Confront the Wraith", "confrontWraith"],
+        ["Avoid it and press on", "avoidWraith"],
+    ]
+  );
+
+  createScene(
+    'avoidWraith',
+    "You die from the Wraiths aura",
+    "/Images/eliasAuraDeath.webp",
+    []
+  );
+
+  createScene(
+    'confrontWraith',
+    "The Wraith trembles in Elias's Aura, and tells him of the past of the Hollowkeep Gates",
+    "/Images/eliasAura.webp",
+    [
+        ["Continue on your journey", "continueJourney"],
+    ]
+  );
+
+  createScene(
+    'continueJourney',
+    "The ruined fortress of the Veilbound King looms ahead, its gates sealed with blood iron",
+    "/Images/eliasStandingPalace.webp",
+    [
+        ["Search for another entrance", "searchEntrance"],
+        ["Call out to the king - if he still lives, he may answer", "callKing"],
+    ]
+  );
+
+  createScene(
+    'searchEntrance',
+    "Encounter Ruggul the Wrathful and scream until your lungs tear",
+    "/Images/eliasRuggul.webp",
+    []
+  );
+
+  createScene(
+    'callKing',
+    "The Veilbound King, the first soul cursed by the Hollow Veil stands before Elias, twisted yet aware. He does not attack",
+    "/Images/eliasVeilboundKing.webp",
+    [
+      ["Speak with him about the Hollow Veil", "speakKing"],
+      ["Challenge him to a duel", "duelKing"],
+    ]
+  );
+
+  createScene(
+    'speakKing',
+    "The Veilbound King has no mercy, he ripped out the essence of your soul",
+    "/Images/eliasDeathKing.webp",
+    []
+  );
+
 }
