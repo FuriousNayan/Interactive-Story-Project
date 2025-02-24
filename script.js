@@ -98,7 +98,7 @@ function initializeScenes() {
   createScene(
       'intro',
       "Returning to Varesth\nElias arrives at the ruined capital, now infested with Hollowborn, twisted remnants of humanity. A dark presence watches him from the shadows.",
-      "/Images/secondScene.webp",
+      "secondScene.webp",
       [
           ["Explore Ruins", "ruinsExplore"],
           ["Head Straight to Cathedral", "cathedral"]
@@ -108,14 +108,14 @@ function initializeScenes() {
   createScene(
       'ruinsExplore',
       "Elias dies from the Hollowborn for being too curious",
-      "/Images/eliasDieHollowborn.webp",
+      "eliasDieHollowborn.webp",
       []
   );
 
   createScene(
       'cathedral',
       "The cursed Father Malgath lingers within, speaking in riddles. He tells Elias the Heart of the Hollow Veil lies beyond Ebonwood Forest, but warns that it is not a gift, it is a choice",
-      "/Images/eliasRiddle.webp",
+      "eliasRiddle.webp",
       [
           ["Demand the truth from Father Malgath", "demandTruth"],
           ["Ponder upon his words and leave", "ponderWords"],
@@ -125,14 +125,14 @@ function initializeScenes() {
   createScene(
     'demandTruth',
     "Father Malgath rips out your lungs, because you talked too much",
-    "/Images/eliasMalgath.webp",
+    "eliasMalgath.webp",
     []
   );
 
   createScene(
     'ponderWords',
     "A ruined village stands on the path ahead, its dead still whispering for release",
-    "/Images/eliasVillage.webp",
+    "eliasVillage.webp",
     [
         ["Perform the burial Ritual to grant them peace, but risk drawing their attention", "burialRitual"],
         ["Leave them be and continue on your journey", "leaveVillage"],
@@ -142,7 +142,7 @@ function initializeScenes() {
   createScene(
     'burialRitual',
     "The dead are thankful, and grant you with the power of death",
-    "/Images/eliasDeathPower.webp",
+    "eliasDeathPower.webp",
     [
         ["Continue on your journey", "leaveVillage"],
     ]
@@ -151,7 +151,7 @@ function initializeScenes() {
   createScene(
     'leaveVillage',
     "The Cursed woods twist reality. As Elias ventures deeper he encounters the Wraith of the Forgotten, a being that speaks of his past",
-    "/Images/eliasPast.webp",
+    "eliasPast.webp",
     [
         ["Confront the Wraith", "confrontWraith"],
         ["Avoid it and press on", "avoidWraith"],
@@ -161,14 +161,14 @@ function initializeScenes() {
   createScene(
     'avoidWraith',
     "You die from the Wraiths aura",
-    "/Images/eliasAuraDeath.webp",
+    "eliasAuraDeath.webp",
     []
   );
 
   createScene(
     'confrontWraith',
     "The Wraith trembles in Elias's Aura, and tells him of the past of the Hollowkeep Gates",
-    "/Images/eliasAura.webp",
+    "eliasAura.webp",
     [
         ["Continue on your journey", "continueJourney"],
     ]
@@ -177,7 +177,7 @@ function initializeScenes() {
   createScene(
     'continueJourney',
     "The ruined fortress of the Veilbound King looms ahead, its gates sealed with blood iron",
-    "/Images/eliasStandingPalace.webp",
+    "eliasStandingPalace.webp",
     [
         ["Search for another entrance", "searchEntrance"],
         ["Call out to the king - if he still lives, he may answer", "callKing"],
@@ -187,14 +187,14 @@ function initializeScenes() {
   createScene(
     'searchEntrance',
     "Encounter Ruggul the Wrathful and scream until your lungs tear",
-    "/Images/eliasRuggul.webp",
+    "eliasRuggul.webp",
     []
   );
 
   createScene(
     'callKing',
     "The Veilbound King, the first soul cursed by the Hollow Veil stands before Elias, twisted yet aware. He does not attack",
-    "/Images/eliasVeilboundKing.webp",
+    "eliasVeilboundKing.webp",
     [
       ["Speak with him about the Hollow Veil", "speakKing"],
       ["Challenge him to a duel", "duelKing"],
@@ -204,7 +204,7 @@ function initializeScenes() {
   createScene(
     'speakKing',
     "The Veilbound King has no mercy, he ripped out the essence of your soul",
-    "/Images/eliasDeathKing.webp",
+    "eliasDeathKing.webp",
     []
   );
 
