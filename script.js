@@ -98,7 +98,7 @@ function initializeScenes() {
   createScene(
       'intro',
       "Returning to Varesth\nElias arrives at the ruined capital, now infested with Hollowborn, twisted remnants of humanity. A dark presence watches him from the shadows.",
-      "secondScene.webp",
+      "../secondScene.webp",
       [
           ["Explore Ruins", "ruinsExplore"],
           ["Head Straight to Cathedral", "cathedral"]
