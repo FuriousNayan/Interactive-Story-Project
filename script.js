@@ -208,4 +208,48 @@ function initializeScenes() {
     []
   );
 
+  createScene(
+    'duelKing',
+    "Impaled the Veilbound King with the Sword of the Oathbringer and claim the Heart of the Hollow Veil",
+    "eliasFighting.webp",
+    [
+      ["Continue on your journey", "endGame"]
+    ]
+  );
+
+  createScene(
+    'endGame',
+    "Elias has claimed the Heart of the Hollow Veil, what will he do?",
+    "eliasHeart.webp",
+    [
+      ["Destroy the Heart of the Hollow Veil", "destroyHeart"],
+      ["Absorb the Power of the Heart of the Hollow Veil", "absorbHeart"],
+      ["Attempt to reshape the Heart of the Hollow Veil", "shapeHeart"]
+    ]
+  );
+
+  createScene(
+    'destroyHeart',
+    "Elias destroys the heart, unleashing a cleansing fire that purges the land. The Hollowborn and cursed souls are freed, but so is Elias. His body crumbles to ash, his sacrifice erasing the last remnants of the kingdom",
+    "eliasDestroy.webp",
+    []
+  );
+
+  createScene(
+    'absorbHeart',
+    "Elias absorbs the Heart's power, becoming the new Veilbound King. The curse stabilizes, but Varesth is forever trapped in darkness, ruled by an eternal king who ensures balance between life and death.",
+    "eliasAbsorb.webp",
+    []
+  );
+
+  createScene(
+    'shapeHeart',
+    "Elias attempts to reshape the Heart's power, but the cycle resets. He awakens at the beginning of his journey, doomed to repeat it forever. The whispers return, and the Hollow Veil endures. ",
+    "eliasReshape.webp",
+    []
+  );
+  
+ 
+
+
 }
