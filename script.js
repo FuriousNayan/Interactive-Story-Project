@@ -1,54 +1,106 @@
 window.onload = function() {
+  // Start background music
   document.getElementById('backgroundMusic').play();
+  
+  // Request player name
+  const playerName = prompt("Enter your character's name:", "Elias");
+  initializeGame(playerName || "Elias");
 }
 
+// Play music on first click 
 document.addEventListener('click', function playOnClick() {
   document.getElementById('backgroundMusic').play();
   document.removeEventListener('click', playOnClick);
 });
 
+// Game state variables
 let scenes = [];
 let currentSceneId = null;
 let gameStarted = false;
+let playerName = "Elias";
 
-initializeScenes();
+function initializeGame(name) {
+  playerName = name;
+  initializeScenes();
+  setupImageTooltips();
+  
+  // Set up continue button
+  document.getElementById('continue-button').addEventListener('click', function() {
+    goToScene('intro');
+  });
+}
 
-
+// Adding tooltip functionality to images
+function setupImageTooltips() {
+  const storyImage = document.getElementById('story-image');
+  
+  // Creates tooltip element
+  const tooltip = document.createElement('div');
+  tooltip.className = 'tooltip';
+  tooltip.style.display = 'none';
+  tooltip.style.position = 'absolute';
+  tooltip.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+  tooltip.style.color = 'white';
+  tooltip.style.padding = '5px';
+  tooltip.style.borderRadius = '3px';
+  tooltip.style.zIndex = '100';
+  document.body.appendChild(tooltip);
+  
+  // Add event listeners to the story image
+  storyImage.addEventListener('mouseover', function() {
+    const scene = findScene(currentSceneId);
+    if (!scene) return;
+    
+    // Update tooltip content based on current scene
+    tooltip.textContent = `Scene: ${currentSceneId} - ${scene[1].split('\n')[0]}`;
+    
+    // Positions tooltip near the image
+    const rect = storyImage.getBoundingClientRect();
+    tooltip.style.top = (rect.bottom + window.scrollY + 5) + 'px';
+    tooltip.style.left = (rect.left + window.scrollX) + 'px';
+    tooltip.style.display = 'block';
+  });
+  
+  storyImage.addEventListener('mouseout', function() {
+    tooltip.style.display = 'none';
+  });
+}
 
 function createScene(id, text, image, choices) {
   const existingSceneIndex = scenes.findIndex(scene => scene[0] === id);
   
-  const newScene = [id, text, image, choices];
+  // Replaces"Elias" with player's name in scene text
+  const personalizedText = text.replace(/Elias/g, playerName);
+  
+  const newScene = [id, personalizedText, image, choices];
   
   if (existingSceneIndex >= 0) {
-      scenes[existingSceneIndex] = newScene;
+    scenes[existingSceneIndex] = newScene;
   } else {
-      scenes.push(newScene);
+    scenes.push(newScene);
   }
 }
 
 function findScene(id) {
-  const scene = scenes.find(scene => scene[0] === id);
-  return scene || null;
+  return scenes.find(scene => scene[0] === id) || null;
 }
 
 function goToScene(id) {
   const scene = findScene(id);
   if (!scene) {
-      console.error(`Scene ${id} does not exist!`);
-      return;
+    console.error(`Scene ${id} does not exist!`);
+    return;
   }
   
   currentSceneId = id;
   gameStarted = true;
   
   updateStory(scene[1], scene[2]);
-  
   createChoiceButtons(scene[3]);
   
   const continueButton = document.getElementById('continue-button');
   if (continueButton) {
-      continueButton.remove();
+    continueButton.remove();
   }
 }
 
@@ -64,40 +116,47 @@ function createChoiceButtons(choices) {
   buttonContainer.innerHTML = '';
   
   if (!choices || choices.length === 0) {
-      const restartButton = document.createElement('button');
-      restartButton.textContent = 'Restart Story';
-      restartButton.addEventListener('click', () => goToScene('intro'));
-      buttonContainer.appendChild(restartButton);
+    const restartButton = document.createElement('button');
+    restartButton.textContent = 'Restart Story';
+    restartButton.addEventListener('click', () => goToScene('intro'));
+    buttonContainer.appendChild(restartButton);
   } else {
-      choices.forEach(choice => {
-          const button = document.createElement('button');
-          button.textContent = choice[0];
-          button.addEventListener('click', () => goToScene(choice[1]));
-          buttonContainer.appendChild(button);
-      });
+    // Using a for loop for creating buttons 
+    for (let i = 0; i < choices.length; i++) {
+      const choice = choices[i];
+      const button = document.createElement('button');
+      button.textContent = `${i+1}. ${choice[0]}`;  // Add numbers to buttons
+      button.addEventListener('click', () => goToScene(choice[1]));
+      buttonContainer.appendChild(button);
+    }
   }
   
   const existingContainer = document.getElementById('button-container');
   if (existingContainer) {
-      existingContainer.replaceWith(buttonContainer);
+    existingContainer.replaceWith(buttonContainer);
   } else {
-      const storyContainer = document.querySelector('.story-container') || document.body;
-      storyContainer.appendChild(buttonContainer);
+    const storyContainer = document.querySelector('.story-container') || document.body;
+    storyContainer.appendChild(buttonContainer);
   }
 }
 
-document.getElementById('continue-button').addEventListener('click', function() {
-  goToScene('intro');
-});
-
+// Allow adding new scenes programmatically
 function addNewScene(id, text, image, choices) {
   createScene(id, text, image, choices);
 }
 
+// Keyboard navigation
+document.addEventListener('keydown', function(event) {
+  // If key '0' is pressed, reload the page to restart
+  if (event.key === '0') {
+    location.reload();
+  }
+});
+
 function initializeScenes() {
   createScene(
       'intro',
-      "Returning to Varesth\nElias arrives at the ruined capital, now infested with Hollowborn, twisted remnants of humanity. A dark presence watches him from the shadows.",
+      "Returning to Varesth,\nElias arrives at the ruined capital, now infested with Hollowborn, twisted remnants of humanity. A dark presence watches him from the shadows.",
       "secondScene.webp",
       [
           ["Explore Ruins", "ruinsExplore"],
@@ -248,8 +307,4 @@ function initializeScenes() {
     "eliasReshape.webp",
     []
   );
-  
- 
-
-
 }
