@@ -1,33 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script src = "script.js" defer></script>
-  <link rel="stylesheet" href="style.css">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Hollowveil King</title>
+    <!-- Link to external JavaScript file with defer attribute to load after HTML parsing -->
+    <script src="script.js" defer></script>
+    <!-- Link to external CSS stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Character encoding declaration -->
+    <meta charset="UTF-8">
+    <!-- Mobile viewport settings  -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Page title that appears in browser tab -->
+    <title>The Hollowveil King</title>
 </head>
 <body>
-  <audio id="backgroundMusic" autoplay loop>
-    <source src="hideDorian.mp3" type="audio/mp3">
-  </audio>
-  
-  <div class="main-content">
-    <h1>THE HOLLOWVEIL KING</h1>
+    <!-- Background music player set to autoplay and loop -->
+    <audio id="backgroundMusic" autoplay loop>
+        <source src="hideDorian.mp3" type="audio/mp3">
+    </audio>
     
-    <img id="story-image" src="varsethBackroundImage.webp" alt="The Hollowveil King">
-    
-    <p id="story-text">
-      In the decaying kingdom of Varesth, a curse had spread like a plague,
-      twisting men into beasts and turning the dead into restless shadows.
-      You are a forsaken knight who has returned to his homeland,
-      drawn by whispers of an artifact, the Heart of the Hollow Veil.
-      Said to break the curse or doom the land forever.
-    </p>
-    
-
-    <button id="continue-button">Continue on the journey of the Hollowveil King</button>
-  </div>
+    <!-- Main container for story content -->
+    <div class="main-content">
+        <!-- Main title of the story/game -->
+        <h1>THE HOLLOWVEIL KING</h1>
+        
+        <!-- Background image for the story -->
+        <img id="story-image" src="varsethBackroundImage.webp" alt="The Hollowveil King">
+        
+        <!-- Introductory story text paragraph -->
+        <p id="story-text">
+            In the decaying kingdom of Varesth, a curse had spread like a plague,
+            twisting men into beasts and turning the dead into restless shadows.
+            You are a forsaken knight who has returned to his homeland,
+            drawn by whispers of an artifact, the Heart of the Hollow Veil.
+            Said to break the curse or doom the land forever.
+        </p>
+        
+        <!-- Button to progress in the story/game -->
+        <button id="continue-button">Continue on the journey of the Hollowveil King</button>
+    </div>
 </body>
 </html>
-
