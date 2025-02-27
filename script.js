@@ -125,7 +125,7 @@ function createChoiceButtons(choices) {
     for (let i = 0; i < choices.length; i++) {
       const choice = choices[i];
       const button = document.createElement('button');
-      button.textContent = `${i+1}. ${choice[0]}`;  // Add numbers to buttons
+      button.textContent = `${choice[0]}`;  
       button.addEventListener('click', () => goToScene(choice[1]));
       buttonContainer.appendChild(button);
     }
@@ -140,7 +140,7 @@ function createChoiceButtons(choices) {
   }
 }
 
-// Allow adding new scenes programmatically
+// Allow adding new scenes 
 function addNewScene(id, text, image, choices) {
   createScene(id, text, image, choices);
 }
